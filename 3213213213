@@ -3224,7 +3224,9 @@ function Library:CreateWindow(...)
         local tabButtonWidth = (tabAreaWidth - padding) / numTabs  
     
         for _, tab in ipairs(Window.Tabs) do
-            tab.Button.Size = UDim2.new(0, tabButtonWidth, 1, 0)
+            if tab.Button then
+                tab.Button.Size = UDim2.new(0, tabButtonWidth, 1, 0)
+            end
         end
     end
     
@@ -3242,6 +3244,8 @@ function Library:CreateWindow(...)
             ZIndex = 1;
             Parent = TabArea;
         });
+
+        Tab.Button = TabButton  -- <-- ВАЖНО: добавить сюда!
 
         local TabStroke = Library:Create('UIStroke', {
             Color = Library.OutlineColor;
@@ -3281,13 +3285,13 @@ function Library:CreateWindow(...)
             Parent = TabContainer;
         });
 
-        local TabStroke = Library:Create('UIStroke', {
+        local TabStroke2 = Library:Create('UIStroke', {
             Color = Library.OutlineColor;
             Thickness = 1;
             Parent = TabFrame;
         });
 
-        Library:AddToRegistry(TabStroke, {
+        Library:AddToRegistry(TabStroke2, {
             Color = 'OutlineColor';
         });
 
